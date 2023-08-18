@@ -1,0 +1,25 @@
+{
+    "editor.tabSize": 2,
+    "eslint.format.enable": true,
+    "eslint.workingDirectories": [
+        "qbredux",
+        "qbjotai",
+        "qbrecoil",
+        "qbzustand"
+    ],
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "files.associations": {
+        "*.jsx": "javascriptreact"
+    }
+}
