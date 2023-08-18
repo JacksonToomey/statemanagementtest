@@ -30,7 +30,7 @@ const existing = {
 export default function QueryBuilder() {
   const setExisting = useStore((state) => state.setExisting);
   const add = useStore((state) => state.add);
-  const filters = useStore((state) => state.filters);
+  const filterSize = useStore((state) => state.filters.length);
   const handleAddClick = () => {
     add();
   };
@@ -41,7 +41,7 @@ export default function QueryBuilder() {
     <div>
       <button onClick={handleUseExisting}>Use Existing</button>
       <button onClick={handleAddClick}>Add Field</button>
-      {filters.map((_, i) => (
+      {[...Array(filterSize)].map((_, i) => (
         <QueryBuilderItem key={`${i}`} index={i} />
       ))}
       <RenderQuery />

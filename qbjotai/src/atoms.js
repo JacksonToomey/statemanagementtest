@@ -18,3 +18,5 @@ export const filterItemAtom = (index) =>
       ]);
     }
   );
+
+export const filterSizeAtom = atom((get) => get(filterAtom).length);

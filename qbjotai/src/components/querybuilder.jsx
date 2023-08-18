@@ -1,9 +1,8 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { boolState, filterLength, filterState } from "../atoms";
-import fieldMap from "../fields.json";
+import { useAtomValue, useSetAtom } from "jotai";
+import { boolAtom, filterAtom, filterSizeAtom } from "../atoms";
+import fieldMap from '../fields.json';
 import QueryBuilderItem from "./querybuilderitem";
 import RenderQuery from "./renderquery";
-
 const existing = {
   query: {
     bool: {
@@ -31,18 +30,15 @@ const existing = {
 };
 
 export default function QueryBuilder() {
-  const setFilters = useSetRecoilState(filterState);
-  const filterCount = useRecoilValue(filterLength);
-  const [, setBoolState] = useRecoilState(boolState);
+  const setFilters = useSetAtom(filterAtom);
+  const setBool = useSetAtom(boolAtom);
+  const filterSize = useAtomValue(filterSizeAtom);
   const handleAddClick = () => {
-    setFilters((oldFilters) => [
-      ...oldFilters,
-      {
-        not: false,
-        key: Object.keys(fieldMap)[0],
-        value: fieldMap[Object.keys(fieldMap)[0]][0].value,
-      },
-    ]);
+    setFilters((old) => [...old, {
+      not: false,
+      key: Object.keys(fieldMap)[0],
+      value: fieldMap[Object.keys(fieldMap)[0]][0].value,
+    }])
   };
   const handleUseExisting = () => {
     const bool = existing.query.bool;
@@ -57,18 +53,15 @@ export default function QueryBuilder() {
       not: true,
       key: Object.keys(f.match)[0],
       value: f.match[Object.keys(f.match)[0]],
-    }))
-    setFilters([
-      ...newFilters,
-      ...excludes,
-    ]);
-    setBoolState(newBool);
+    }));
+    setBool(newBool);
+    setFilters([...newFilters, ...excludes]);
   };
   return (
     <div>
       <button onClick={handleUseExisting}>Use Existing</button>
       <button onClick={handleAddClick}>Add Field</button>
-      {[...Array(filterCount)].map((_, i) => (
+      {[...Array(filterSize)].map((_, i) => (
         <QueryBuilderItem key={`${i}`} index={i} />
       ))}
       <RenderQuery />

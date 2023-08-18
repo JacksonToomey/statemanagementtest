@@ -1,4 +1,4 @@
-import { atom, selectorFamily } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 
 export const boolState = atom({
   key: "boolState",
@@ -8,6 +8,13 @@ export const boolState = atom({
 export const filterState = atom({
   key: "filterState",
   default: [],
+});
+
+export const filterLength = selector({
+  key: "filterLength",
+  get: ({ get }) => {
+    return get(filterState).length;
+  },
 });
 
 export const getFilter = selectorFamily({

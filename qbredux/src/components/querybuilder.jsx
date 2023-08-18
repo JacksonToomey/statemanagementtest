@@ -37,12 +37,12 @@ export default function QueryBuilder() {
   const handleUseExisting = () => {
     dispatch(setFromExisting(existing));
   };
-  const filters = useSelector((state) => state.qb.filters);
+  const filtersLength = useSelector((state) => state.qb.filters.length);
   return (
     <div>
       <button onClick={handleUseExisting}>Use Existing</button>
       <button onClick={handleAddClick}>Add Field</button>
-      {filters.map((_, i) => (
+      {[...Array(filtersLength)].map((_, i) => (
         <QueryBuilderItem key={`${i}`} index={i} />
       ))}
       <RenderQuery />
