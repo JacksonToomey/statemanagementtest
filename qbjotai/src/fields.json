@@ -1,0 +1,44 @@
+{
+  "foo": [
+    {
+      "value": "foo 1",
+      "display": "First foo"
+    },
+    {
+      "value": "foo 2",
+      "display": "Second foo"
+    },
+    {
+      "value": "foo 3",
+      "display": "Third foo"
+    }
+  ],
+  "bar": [
+    {
+      "value": "bar 1",
+      "display": "First bar"
+    },
+    {
+      "value": "bar 2",
+      "display": "Second bar"
+    },
+    {
+      "value": "bar 3",
+      "display": "Third bar"
+    }
+  ],
+  "bat": [
+    {
+      "value": "bat 1",
+      "display": "First bat"
+    },
+    {
+      "value": "bat 2",
+      "display": "Second bat"
+    },
+    {
+      "value": "bat 3",
+      "display": "Third bat"
+    }
+  ]
+}
