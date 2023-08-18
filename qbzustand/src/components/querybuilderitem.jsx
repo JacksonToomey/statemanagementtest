@@ -1,13 +1,10 @@
-import { useAtom } from "jotai";
-import { useMemo } from "react";
-import { filterItemAtom } from "../atoms";
 import fields from "../fields.json";
+import { useStore } from "../store";
 import QueryBuilderControl from "./querybuildrcontrol";
 
 export default function QueryBuilderItem({ index }) {
-  const [currentField, setCurrentField] = useAtom(
-    useMemo(() => filterItemAtom(index), [index])
-  );
+  const currentField = useStore((state) => state.filters[index]);
+  const update = useStore((state) => state.update);
   const fieldValues = Object.keys(fields);
   const currentKey = currentField.key;
   const fieldOptions = fields[currentKey];
@@ -15,10 +12,10 @@ export default function QueryBuilderItem({ index }) {
   const handleFieldChange = (evt) => {
     const newKey = evt.target.value;
     const newValue = fields[newKey][0].value;
-    setCurrentField({ key: newKey, value: newValue });
+    update(index, { key: newKey, value: newValue });
   };
   const handleValueChange = (evt) => {
-    setCurrentField({ value: evt.target.value });
+    update(index, { value: evt.target.value });
   };
   return (
     <div>

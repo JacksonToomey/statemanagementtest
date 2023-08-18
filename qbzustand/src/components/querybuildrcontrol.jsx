@@ -1,22 +1,21 @@
-import { useAtom } from "jotai";
-import { useMemo } from "react";
-import { boolAtom, filterItemAtom } from "../atoms";
+import { useStore } from "../store";
 
 export default function QueryBuilderControl({ index }) {
-  let [bool, setBool] = useAtom(boolAtom);
-  const [currentFilter, setCurrentFilter] = useAtom(
-    useMemo(() => filterItemAtom(index), [index])
-  );
+  let bool = useStore((state) => state.bool);
+  const update = useStore((state) => state.update);
+  const setBool = useStore((state) => state.setBool);
+  const currentFilter = useStore((state) => state.filters[index]);
   if (currentFilter.not) {
     bool = "not";
   }
+
   const makeClickHandler = (value) => () => {
-    setCurrentFilter({ not: false });
+    update(index, { not: false });
     setBool(value);
   };
 
   const notClickHandler = () => {
-    setCurrentFilter({ not: true });
+    update(index, { not: true });
   };
   return (
     <div>
