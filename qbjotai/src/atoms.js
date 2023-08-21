@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+
 export const boolAtom = atom("and");
 
 export const filterAtom = atom([]);
