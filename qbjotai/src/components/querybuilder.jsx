@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { boolAtom, filterAtom, filterSizeAtom } from "../atoms";
+import { esQueryAtom, filterAtom, filterSizeAtom } from "../atoms";
 import fieldMap from '../fields.json';
 import QueryBuilderItem from "./querybuilderitem";
 import RenderQuery from "./renderquery";
@@ -31,8 +31,8 @@ const existing = {
 
 export default function QueryBuilder() {
   const setFilters = useSetAtom(filterAtom);
-  const setBool = useSetAtom(boolAtom);
   const filterSize = useAtomValue(filterSizeAtom);
+  const setExisting = useSetAtom(esQueryAtom);
   const handleAddClick = () => {
     setFilters((old) => [...old, {
       not: false,
@@ -41,21 +41,7 @@ export default function QueryBuilder() {
     }])
   };
   const handleUseExisting = () => {
-    const bool = existing.query.bool;
-    const newBool = bool.must ? "and" : "or";
-    const filters = bool.must || bool.should;
-    const newFilters = filters.map((f) => ({
-      not: false,
-      key: Object.keys(f.match)[0],
-      value: f.match[Object.keys(f.match)[0]],
-    }));
-    const excludes = bool.must_not.map((f) => ({
-      not: true,
-      key: Object.keys(f.match)[0],
-      value: f.match[Object.keys(f.match)[0]],
-    }));
-    setBool(newBool);
-    setFilters([...newFilters, ...excludes]);
+    setExisting(existing);
   };
   return (
     <div>
