@@ -29,7 +29,7 @@ export default function QueryBuilderControl({ index }) {
   return (
     <div>
       {bool === "and" ? (
-        "AND"
+        <span>AND</span>
       ) : (
         <button onClick={makeClickHandler("and")}>AND</button>
       )}
