@@ -1,5 +1,5 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { boolState, filterLength, filterState } from "../atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { esQuerySelector, filterLength, filterState } from "../atoms";
 import fieldMap from "../fields.json";
 import QueryBuilderItem from "./querybuilderitem";
 import RenderQuery from "./renderquery";
@@ -33,7 +33,7 @@ const existing = {
 export default function QueryBuilder() {
   const setFilters = useSetRecoilState(filterState);
   const filterCount = useRecoilValue(filterLength);
-  const [, setBoolState] = useRecoilState(boolState);
+  const setExisting = useSetRecoilState(esQuerySelector);
   const handleAddClick = () => {
     setFilters((oldFilters) => [
       ...oldFilters,
@@ -45,24 +45,7 @@ export default function QueryBuilder() {
     ]);
   };
   const handleUseExisting = () => {
-    const bool = existing.query.bool;
-    const newBool = bool.must ? "and" : "or";
-    const filters = bool.must || bool.should;
-    const newFilters = filters.map((f) => ({
-      not: false,
-      key: Object.keys(f.match)[0],
-      value: f.match[Object.keys(f.match)[0]],
-    }));
-    const excludes = bool.must_not.map((f) => ({
-      not: true,
-      key: Object.keys(f.match)[0],
-      value: f.match[Object.keys(f.match)[0]],
-    }))
-    setFilters([
-      ...newFilters,
-      ...excludes,
-    ]);
-    setBoolState(newBool);
+    setExisting(existing);
   };
   return (
     <div>
